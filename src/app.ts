@@ -8,6 +8,7 @@ interface Validatable {
   max?: number;
 }
 
+// * Validation function
 function validate(validatableInput: Validatable): boolean {
   let isValid = true;
   if (validatableInput.required) {
@@ -20,7 +21,7 @@ function validate(validatableInput: Validatable): boolean {
     typeof validatableInput.value === 'string'
   ) {
     isValid =
-      isValid && validatableInput.value.length > validatableInput.minLength;
+      isValid && validatableInput.value.length >= validatableInput.minLength;
   }
 
   // maxLength validation
@@ -29,7 +30,7 @@ function validate(validatableInput: Validatable): boolean {
     typeof validatableInput.value === 'string'
   ) {
     isValid =
-      isValid && validatableInput.value.length < validatableInput.maxLength;
+      isValid && validatableInput.value.length <= validatableInput.maxLength;
   }
 
   // min validation
@@ -37,7 +38,7 @@ function validate(validatableInput: Validatable): boolean {
     validatableInput.min != null &&
     typeof validatableInput.value === 'number'
   ) {
-    isValid = isValid && validatableInput.value > validatableInput.min;
+    isValid = isValid && validatableInput.value >= validatableInput.min;
   }
 
   // max validation
@@ -45,7 +46,7 @@ function validate(validatableInput: Validatable): boolean {
     validatableInput.max != null &&
     typeof validatableInput.value === 'number'
   ) {
-    isValid = isValid && validatableInput.value < validatableInput.max;
+    isValid = isValid && validatableInput.value <= validatableInput.max;
   }
   return isValid;
 }
@@ -68,6 +69,43 @@ function Autobind(
   return objDescriptor;
 }
 
+// * ProjectList Class
+class ProjectList {
+  templateElement: HTMLTemplateElement;
+  hostElement: HTMLDivElement;
+  element: HTMLElement;
+
+  constructor(private type: 'active' | 'finished') {
+    this.templateElement = document.getElementById(
+      'project-list'
+    )! as HTMLTemplateElement;
+    this.hostElement = document.getElementById('app')! as HTMLDivElement;
+
+    const importedNode = document.importNode(
+      this.templateElement.content,
+      true
+    );
+
+    this.element = importedNode.firstElementChild as HTMLElement;
+    this.element.id = `${this.type}-projects`;
+
+    this.attach();
+    this.renderContent();
+  }
+
+  private renderContent() {
+    const listId = `${this.type}-projects-list`;
+    this.element.querySelector('ul')!.id = listId;
+    this.element.querySelector('h2')!.textContent =
+      this.type.toUpperCase() + ' PROJECTS';
+  }
+
+  private attach() {
+    this.hostElement.insertAdjacentElement('beforeend', this.element);
+  }
+}
+
+// * ProjectInput Class
 class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
@@ -165,4 +203,6 @@ class ProjectInput {
   }
 }
 
-const prjInpit = new ProjectInput();
+const prjInput = new ProjectInput();
+const activePrjList = new ProjectList('active');
+const finishedPrjList = new ProjectList('finished');
