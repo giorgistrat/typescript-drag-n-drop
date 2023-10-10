@@ -132,12 +132,6 @@ function Autobind(
   return objDescriptor;
 }
 
-<<<<<<< Updated upstream
-class ProjectInput {
-  templateElement: HTMLTemplateElement;
-  hostElement: HTMLDivElement;
-  element: HTMLElement;
-=======
 // * Component  Base class
 abstract class Component<T extends HTMLElement, U extends HTMLElement> {
   templateElement: HTMLTemplateElement;
@@ -245,7 +239,6 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
 
 // * ProjectInput Class
 class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
->>>>>>> Stashed changes
   titleInputElement: HTMLInputElement;
   descriptionInputElement: HTMLInputElement;
   peopleInputElement: HTMLInputElement;
@@ -326,3 +319,5 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
 }
 
 const prjInpit = new ProjectInput();
+const activePrjList = new ProjectList('active');
+const finishedPrjList = new ProjectList('finished');

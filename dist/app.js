@@ -85,9 +85,6 @@ function Autobind(_, _2, descriptor) {
     };
     return objDescriptor;
 }
-<<<<<<< Updated upstream
-class ProjectInput {
-=======
 class Component {
     constructor(templateId, hostElementId, insertAtStart, newElementId) {
         this.templateElement = document.getElementById(templateId);
@@ -152,7 +149,6 @@ class ProjectItem extends Component {
     }
 }
 class ProjectInput extends Component {
->>>>>>> Stashed changes
     constructor() {
         super('project-input', 'app', true, 'user-input');
         this.titleInputElement = this.element.querySelector('#title');
@@ -210,4 +206,6 @@ __decorate([
     Autobind
 ], ProjectInput.prototype, "submitHandler", null);
 const prjInpit = new ProjectInput();
+const activePrjList = new ProjectList('active');
+const finishedPrjList = new ProjectList('finished');
 //# sourceMappingURL=app.js.map
